@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostModule } from './post/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { Post } from './post/entities/post.entity';
 
 @Module({
   imports: [
@@ -15,11 +17,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: 'password',
       // database: 'yourdb',
       database: 'blog-tutorial',
-      entities: [],
+      entities: [Post],
       synchronize: true,
     }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
