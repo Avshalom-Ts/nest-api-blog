@@ -5,6 +5,7 @@ import { PostModule } from './post/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Post } from './post/entities/post.entity';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Post } from './post/entities/post.entity';
       entities: [Post],
       synchronize: true,
     }),
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
