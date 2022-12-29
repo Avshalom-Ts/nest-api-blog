@@ -8,6 +8,7 @@ import { Post } from './post/entities/post.entity';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 import { Category } from './category/entities/category.entity';
+import { User } from './auth/entities/user.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { Category } from './category/entities/category.entity';
       password: 'password',
       // database: 'yourdb',
       database: 'blog-tutorial',
-      entities: [Post, Category],
+      entities: [Post, Category, User],
       synchronize: true,
     }),
     CategoryModule,
