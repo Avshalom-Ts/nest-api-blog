@@ -15,9 +15,14 @@ export class PostService {
     // return 'This action adds a new post';
     // console.log(createPostDto);
     // return true;
-    const slug = createPostDto.title.split(' ').join('_').toLowerCase();
+    // const slug = createPostDto.title.split(' ').join('_').toLowerCase();
+    const post = new Post();
+    //TODO! post.title = createPostDto.title; insdet in the next line..
+    Object.assign(post, createPostDto);
+    post.userId = 1; //TODO! For now untile the authintication complet
 
-    return await this.repo.insert({ ...createPostDto, slug });
+    this.repo.create(post);
+    return await this.repo.save(post);
   }
 
   async findAll(): Promise<Post[]> {
