@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Post } from './post/entities/post.entity';
 import { CategoryModule } from './category/category.module';
-import { AuthModule } from './user/auth.module';
+import { AuthModule } from './user/user.module';
 import { Category } from './category/entities/category.entity';
 import { User } from './user/entities/user.entity';
 
