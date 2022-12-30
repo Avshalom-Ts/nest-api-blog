@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -22,7 +23,9 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ select: false })
+  //TODO! We can use the select : false or @Exclude() to keep the data from the fronEnd.
+  // @Exclude()
   password: string;
 
   @Column()
