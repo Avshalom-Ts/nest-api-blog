@@ -19,7 +19,7 @@ export class Post {
   @Column()
   mainImageUrl: string;
 
-  @ManyToOne(() => Post, (post) => post.user)
+  @ManyToOne(() => User, (user) => user.posts, { eager: true })
   user: User;
 
   @ManyToOne(() => Category, (category) => category.post, { eager: true })

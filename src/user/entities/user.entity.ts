@@ -1,4 +1,3 @@
-import { userInfo } from 'os';
 import { Post } from 'src/post/entities/post.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -22,6 +21,6 @@ export class User {
   @Column()
   profilepic: string;
 
-  @OneToMany(() => User, (user) => user.posts, { eager: true })
+  @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 }
