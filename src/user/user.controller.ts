@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/user-login.dto';
 import { Response } from 'express';
@@ -30,9 +38,16 @@ export class UserController {
     return await this.userService.register(userCreateDto);
   }
 
-  @Get()
+  @Get('authstatus')
   @UseGuards(CurrentUserGuard)
   authStatus(@CurrentUser() user: User) {
     return { status: !!user, user };
+  }
+
+  @Post('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    res.clearCookie('Authentication');
+    res.clearCookie('IsAuthenticated');
+    return res.status(200).send({ success: true });
   }
 }
