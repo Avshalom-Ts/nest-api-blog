@@ -1,8 +1,11 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserLoginDto } from './dto/user-login.dto';
 import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CurrentUserGuard } from '../user/current-user.guard';
+import { User } from './entities/user.entity';
+import { CurrentUser } from './user.decorator';
 
 @Controller('auth')
 export class UserController {
@@ -25,5 +28,11 @@ export class UserController {
   @Post('register')
   async userRegistration(@Body() userCreateDto: CreateUserDto) {
     return await this.userService.register(userCreateDto);
+  }
+
+  @Get()
+  @UseGuards(CurrentUserGuard)
+  authStatus(@CurrentUser() user: User) {
+    return { status: !!user, user };
   }
 }
