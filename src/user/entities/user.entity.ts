@@ -15,7 +15,7 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  firstname: string;
 
   @Column()
   lastname: string;
@@ -28,7 +28,7 @@ export class User {
   // @Exclude()
   password: string;
 
-  @Column()
+  @Column({ default: null })
   profilepic: string;
 
   @OneToMany(() => Post, (post) => post.user)
