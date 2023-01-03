@@ -15,6 +15,7 @@ import {
   Query,
   UploadedFile,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -23,6 +24,9 @@ import { User } from 'src/user/entities/user.entity';
 import { Express, Response, Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from 'src/user/user.decorator';
+import { ACGuard, UseRoles } from 'nest-access-control';
 
 @Controller('posts')
 export class PostController {
@@ -30,7 +34,13 @@ export class PostController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() createPostDto: CreatePostDto, @Req() req: Request) {
+  @UseGuards(AuthGuard('jwt'), ACGuard)
+  @UseRoles({ possession: 'any', action: 'create', resource: 'Posts' })
+  create(
+    @Body() createPostDto: CreatePostDto,
+    @Req() req: Request,
+    @CurrentUser() user: User,
+  ) {
     // eslint-disable-next-line
     // @ts-ignore
     return this.postService.create(createPostDto, req.user as User);
@@ -91,11 +101,15 @@ export class PostController {
   }
 
   @Patch(':slug')
+  @UseGuards(AuthGuard('jwt'), ACGuard)
+  @UseRoles({ possession: 'any', action: 'update', resource: 'Posts' })
   update(@Param('slug') slug: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postService.update(slug, updatePostDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'), ACGuard)
+  @UseRoles({ possession: 'any', action: 'delete', resource: 'Posts' })
   remove(@Param('id') id: string) {
     return this.postService.remove(+id);
   }

@@ -9,6 +9,8 @@ import { CategoryModule } from './category/category.module';
 import { AuthModule } from './user/user.module';
 import { Category } from './category/entities/category.entity';
 import { User } from './user/entities/user.entity';
+import { AccessControlModule } from 'nest-access-control';
+import { roles } from './user/user-roles';
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import { User } from './user/entities/user.entity';
     }),
     CategoryModule,
     AuthModule,
+    AccessControlModule.forRoles(roles),
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { UserRoles } from '../user-roles';
 // import { Exclude } from 'class-transformer';
 
 @Entity('users')
@@ -30,6 +31,9 @@ export class User {
 
   @Column({ default: null })
   profilepic: string;
+
+  @Column({ type: 'enum', enum: UserRoles, default: UserRoles.Reader })
+  roles: UserRoles;
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
