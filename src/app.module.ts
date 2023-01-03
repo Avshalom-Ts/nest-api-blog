@@ -18,7 +18,7 @@ import { User } from './user/entities/user.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'password',
+      password: 'Angi120593',
       // database: 'yourdb',
       database: 'blog-tutorial',
       entities: [Post, Category, User],
