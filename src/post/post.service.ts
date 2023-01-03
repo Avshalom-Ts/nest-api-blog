@@ -20,7 +20,7 @@ export class PostService {
     const post = new Post();
     //TODO! post.title = createPostDto.title; insdet in the next line..
     Object.assign(post, createPostDto);
-    post.userId = 1; //TODO! For now untile the authintication complet
+    post.userId = user.id; //TODO! For now untile the authintication complet
 
     this.repo.create(post);
     return await this.repo.save(post);

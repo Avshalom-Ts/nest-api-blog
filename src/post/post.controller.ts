@@ -11,14 +11,16 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Req,
+  Res,
   Query,
   UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/user/entities/user.entity';
-import { Express } from 'express';
+import { Express, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 
@@ -59,7 +61,7 @@ export class PostController {
           const name = file.originalname.split('.')[0];
           const fileExtention = file.originalname.split('.')[1];
           const newFileName =
-            name.split('').join('_') + '_' + Date.now() + '.' + fileExtention;
+            name.split(' ').join('_') + '_' + Date.now() + '.' + fileExtention;
           cb(null, newFileName);
         },
       }),
@@ -72,7 +74,20 @@ export class PostController {
     }),
   )
   uploadPhoto(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+    // console.log(file);
+    if (!file) {
+      throw new BadRequestException('File is not an image');
+    } else {
+      const response = {
+        filePath: 'http://localhost:5000/posts/pictures/${file.filename}',
+      };
+      return response;
+    }
+  }
+
+  @Get('pictures/:filename')
+  async getPicture(@Param('filename') filename: string, @Res() res: Response) {
+    res.sendFile(filename, { root: './uploads' });
   }
 
   @Patch(':slug')
