@@ -22,7 +22,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/user/entities/user.entity';
 import { Express, Response, Request } from 'express';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from 'src/user/user.decorator';
