@@ -20,7 +20,7 @@ import { roles } from './user/user-roles';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'Angi120593',
+      password: 'password',
       // database: 'yourdb',
       database: 'blog-tutorial',
       entities: [Post, Category, User],
